@@ -8,23 +8,48 @@ WINING_POSITION=100
 
 position=0
 option=0
+index=0
+currentResult=0
+diceNumber=0
 
 echo "Welcome to Snake and Ladder"
-while [ $position -le $WINING_POSITION ]
-do
-	dice_number=$(($RANDOM%6+1)) #generates number from 1 to 6
- 	option=$(($RANDOM%3)) #generates number from 0 to 2
-	#switch case to match the option with any one of the case and change position 
+
+#function to the change position according to the options
+function changePositions(){
+
 	case $option in
-		$LADDER)position=$(($position + $dice_number));;
-		$NO_PLAY)position=$position;;
-		$SNAKE)	position=$(($position - $dice_number));;
+	$LADDER) currentResult=$(( position + diceNumber ))
+				if [ $currentResult -le $WINING_POSITION ]
+				then
+						position=$currentResult
+				else
+						position=$position
+				fi
+				;;
+	$NO_PLAY) position=$position;;
+	$SNAKE)	currentResult=$(( position - diceNumber ))
+				if [ $currentResult -lt 0 ]
+				then
+						position=$START_POSITION
+				else
+						position=$currentResult
+				fi
+				;;
 	esac
-	#checks if position is minus value if it is minus value then assigns with start position  
-	if [ $position -lt 0 ]
-	then
-		position=$START_POSITION
-	fi
-	echo " Current postion " $position
-done
-echo "CONGRAGULATIONS !! YOU WON"
+}
+
+#function to play snake and ladder game
+function game(){
+	while [ $position -lt $WINING_POSITION ]
+	do
+		diceNumber=$(( RANDOM % 6 + 1 )) #generates number from 1 to 6
+ 		option=$(( RANDOM % 3 )) #generates number from 0 to 2
+		changePositions #function call
+	done
+}
+
+game #function call
+
+echo "YOU HAVE REACHED" $position "th" "POSITION"
+echo "CONGRAGULATIONS !! YOU WON "
+
