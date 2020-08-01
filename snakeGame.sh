@@ -11,6 +11,7 @@ option=0
 index=0
 currentResult=0
 diceNumber=0
+numOfTimesDiceRolled=0
 
 echo "Welcome to Snake and Ladder"
 
@@ -21,13 +22,14 @@ function changePositions(){
 		 if [ $currentResult -le $WINING_POSITION ]
 		 then
 			position=$currentResult
-		 else
+		 else 
 			position=$position
+			echo "Current Position =" $currentResult
 		 fi
 		 ;;
-		 
+
 	$NO_PLAY) position=$position;;
-	
+
 	$SNAKE)	currentResult=$(( position - diceNumber ))
 		if [ $currentResult -lt 0 ]
 		then
@@ -37,6 +39,7 @@ function changePositions(){
 		fi
 		;;
 	esac
+	echo "Current Position =" $position
 }
 
 #function to play snake and ladder game
@@ -44,13 +47,14 @@ function game(){
 	while [ $position -lt $WINING_POSITION ]
 	do
 		diceNumber=$(( RANDOM % 6 + 1 )) #generates number from 1 to 6
+		((numOfTimesDiceRolled++))
  		option=$(( RANDOM % 3 )) #generates number from 0 to 2
 		changePositions #function call
 	done
 }
 
 game #function call
-
+echo "--------------------------------"
 echo "YOU HAVE REACHED" $position "th" "POSITION"
 echo "CONGRAGULATIONS !! YOU WON "
-
+echo "Rolled Dice for" $numOfTimesDiceRolled "times to win"
