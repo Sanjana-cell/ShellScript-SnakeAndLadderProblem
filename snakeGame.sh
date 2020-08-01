@@ -18,24 +18,24 @@ echo "Welcome to Snake and Ladder"
 function changePositions(){
 	case $option in
 	$LADDER) currentResult=$(( position + diceNumber ))
-				if [ $currentResult -le $WINING_POSITION ]
-				then
-						position=$currentResult
-				else
-						position=$position
-				fi
-				;;
-
+		 if [ $currentResult -le $WINING_POSITION ]
+		 then
+			position=$currentResult
+		 else
+			position=$position
+		 fi
+		 ;;
+		 
 	$NO_PLAY) position=$position;;
-
+	
 	$SNAKE)	currentResult=$(( position - diceNumber ))
-				if [ $currentResult -lt 0 ]
-				then
-						position=$START_POSITION
-				else
-						position=$currentResult
-				fi
-				;;
+		if [ $currentResult -lt 0 ]
+		then
+			position=$START_POSITION
+		else
+			position=$currentResult
+		fi
+		;;
 	esac
 }
 
