@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/bin/bash -x
 
 SNAKE=0
 NO_PLAY=1
 LADDER=2
 START_POSITION=0
 WINING_POSITION=100
+PLAYER_1_ID=1
+PLAYER_2_ID=2
 
 position=0
 option=0
@@ -14,6 +16,7 @@ numOfTimesDiceRolledP1=0
 numOfTimesDiceRolledP2=0
 player1Position=0
 player2Position=0
+id=0
 
 echo "Welcome to Snake and Ladder"
 
@@ -22,6 +25,7 @@ function changePositions(){
 	diceNumber=$1
 	option=$2
 	position=$3
+
 	case $option in
 	$LADDER) currentResult=$(( position + diceNumber ))
 		 if [ $currentResult -le $WINING_POSITION ]
@@ -50,13 +54,18 @@ function changePositions(){
 
 #function to play snake and ladder game
 function gameStarted(){
-	while [ $player1Position -lt $WINING_POSITION -a $player2Position -lt $WINING_POSITION ]
+	while :
 	do
 		((numOfTimesDiceRolledP1++))
 	 	player1Position="$(changePositions $(( RANDOM % 6 + 1)) $(( RANDOM % 3 ))  $player1Position )" #function call for player 1
 
 		echo "Current position of player 1" $player1Position
 		echo "Current position of player 2" $player2Position
+
+		if [ $player1Position -eq $WINING_POSITION -o $player2Position -eq $WINING_POSITION ]
+		then
+				break #breaks the infinite loop if condition is true
+		fi
 
 		((numOfTimesDiceRolledP2++))
 		player2Position="$(changePositions  $((RANDOM % 6 + 1)) $(( RANDOM % 3 )) $player2Position )" #function call for player 2
