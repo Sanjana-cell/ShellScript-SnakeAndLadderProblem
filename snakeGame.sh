@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash 
 
 SNAKE=0
 NO_PLAY=1
@@ -6,10 +6,6 @@ LADDER=2
 START_POSITION=0
 WINING_POSITION=100
 
-position=0
-option=0
-currentResult=0
-diceNumber=0
 numOfTimesDiceRolledP1=0
 numOfTimesDiceRolledP2=0
 player1Position=0
@@ -19,17 +15,17 @@ echo "Welcome to Snake and Ladder"
 
 #function to change the player 1 and player 2 positions
 function changePositions(){
-	diceNumber=$1
-	option=$2
-	position=$3
+	local diceNumber=$1
+	local option=$2
+	local position=$3
+	local currentResult=0
 
 	case $option in
 	$LADDER) currentResult=$(( position + diceNumber ))
 		 if [ $currentResult -le $WINING_POSITION ]
 		 then
-		  	position=$currentResult
-		 else
-			position=$position
+			diceNumber=$(( RANDOM % 6 + 1))
+		  	position=$(( position + diceNumber ))
 		 fi
 		 ;;
 
