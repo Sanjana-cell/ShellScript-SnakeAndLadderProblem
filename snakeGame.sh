@@ -6,7 +6,6 @@ LADDER=2
 START_POSITION=0
 WINING_POSITION=100
 
-
 position=0
 option=0
 currentResult=0
@@ -61,7 +60,6 @@ function gameStarted(){
 
 		((numOfTimesDiceRolledP2++))
 		player2Position="$(changePositions  $((RANDOM % 6 + 1)) $(( RANDOM % 3 )) $player2Position )" #function call for player 2
-
 	done
 }
 
