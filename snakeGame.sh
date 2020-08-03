@@ -54,10 +54,13 @@ function gameStarted(){
 	do
 		((numOfTimesDiceRolledP1++))
 	 	player1Position="$(changePositions $(( RANDOM % 6 + 1)) $(( RANDOM % 3 ))  $player1Position )" #function call for player 1
+
 		echo "Current position of player 1" $player1Position
 		echo "Current position of player 2" $player2Position
+
 		((numOfTimesDiceRolledP2++))
 		player2Position="$(changePositions  $((RANDOM % 6 + 1)) $(( RANDOM % 3 )) $player2Position )" #function call for player 2
+
 	done
 }
 
