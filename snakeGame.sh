@@ -5,8 +5,6 @@ NO_PLAY=1
 LADDER=2
 START_POSITION=0
 WINING_POSITION=100
-PLAYER_1_ID=1
-PLAYER_2_ID=2
 
 position=0
 option=0
@@ -16,7 +14,6 @@ numOfTimesDiceRolledP1=0
 numOfTimesDiceRolledP2=0
 player1Position=0
 player2Position=0
-id=0
 
 echo "Welcome to Snake and Ladder"
 
@@ -48,7 +45,6 @@ function changePositions(){
 		;;
 
 	esac
-
 	echo $position
 }
 
