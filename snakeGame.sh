@@ -21,82 +21,43 @@ echo "Welcome to Snake and Ladder"
 
 #function to change the player 1 and player 2 positions
 function changePositions(){
-	id=$1
-	diceNumber=$2
-	option=$3
+	diceNumber=$1
+	option=$2
+	position=$3
 	case $option in
-	$LADDER) if [ $id -eq $PLAYER_1_ID ]
+	$LADDER) currentResult=$(( position + diceNumber ))
+		 if [ $currentResult -le $WINING_POSITION ]
 		 then
-		 	currentResult=$(( player1Position + diceNumber ))
-		 	if [ $currentResult -le $WINING_POSITION ]
-		 	then
-				player1Position=$currentResult
-		 	else
-				player1Position=$player1Position
-		 	fi
-		else
-			currentResult=$(( player2Position + diceNumber ))
-			if [ $currentResult -le $WINING_POSITION ]
-			then
-				player2Position=$currentResult
-			else
-				player2Position=$player2Position
-			fi
-		fi
+		  	position=$currentResult
+		 else
+			position=$position
+		 fi
 		;;
 
-	$NO_PLAY) if [ $id -eq $PLAYER_1_ID ]
-		then
-			player1Position=$player1Position
-		else
-			player2Position=$player2Position
-		fi
-		;;
+	$NO_PLAY) position=$position;;
 
-	$SNAKE)	if [ $id -eq $PLAYER_1_ID ]
+	$SNAKE)	currentResult=$(( position - diceNumber ))
+		if [ $currentResult -lt $START_POSITION ]
 		then
-			currentResult=$(( player1Position - diceNumber ))
-			if [ $currentResult -lt $START_POSITION ]
-			then
-				player1Position=$START_POSITION
-			else
-				player1Position=$currentResult
-			fi
+			position=$START_POSITION
 		else
-			currentResult=$(( player2Position - diceNumber ))
-			if [ $currentResult -lt 0 ]
-			then
-				player2Position=$START_POSITION
-			else
-				player2Position=$currentResult
-			fi
+			position=$currentResult
 		fi
 		;;
 	esac
-
-	if [ $id -eq $PLAYER_1_ID ]
-	then
-		echo "Player 1 Current Position " $player1Position
-	else
-		echo "Player 2 Current Position " $player2Position
-	fi
+	echo $position
 }
 
 #function to play snake and ladder game
 function gameStarted(){
-	while :
+	while [ $player1Position -lt $WINING_POSITION -a $player2Position -lt $WINING_POSITION ]
 	do
 		((numOfTimesDiceRolledP1++))
-	 	changePositions $PLAYER_1_ID $(( RANDOM % 6 + 1)) $(( RANDOM % 3 )) #function call for player 1
-
-		# checks if player 1 position or player 2 position is reached winning position 
-		if [ $player1Position -eq $WINING_POSITION -o $player2Position -eq $WINING_POSITION ]
-		then
-			break #breaks the infinite loop if condition is true
-		fi
-
+	 	player1Position="$(changePositions $(( RANDOM % 6 + 1)) $(( RANDOM % 3 ))  $player1Position )" #function call for player 1
+		echo "Current position of player 1" $player1Position
+		echo "Current position of player 2" $player2Position
 		((numOfTimesDiceRolledP2++))
-		changePositions $PLAYER_2_ID $((RANDOM%6+1)) $(( RANDOM % 3 )) #function call for player 2
+		player2Position="$(changePositions  $((RANDOM % 6 + 1)) $(( RANDOM % 3 )) $player2Position )" #function call for player 2
 	done
 }
 
