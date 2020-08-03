@@ -31,7 +31,7 @@ function changePositions(){
 		 else
 			position=$position
 		 fi
-		;;
+		 ;;
 
 	$NO_PLAY) position=$position;;
 
@@ -43,7 +43,9 @@ function changePositions(){
 			position=$currentResult
 		fi
 		;;
+
 	esac
+
 	echo $position
 }
 
